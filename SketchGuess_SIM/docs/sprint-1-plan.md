@@ -11,8 +11,9 @@
 | #2 | Join existing room using code | 2 | Backend Dev | Players can join, max 10 per room. |
 | #8 | Real‑time score updates on correct guess | 3 | QA Lead | Scores update instantly, confetti on correct guess. |
 | #5 | Floating indicator for current drawer | 2 | Frontend Dev | Non‑drawers see a badge with drawer name & avatar. |
+| #13 | Skip drawing turn (skip button) | 3 | Frontend/UI Lead (Roger) | Skip button appears for drawer, ends round, applies penalty. |
 
-**Total Story Points:** 9
+**Total Story Points:** 12
 
 ## Additional Tasks (non‑story)
 - Set up Node.js + Express + Socket.io server (already exists, but ensure documentation).  
