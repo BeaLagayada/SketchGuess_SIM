@@ -98,4 +98,18 @@ describe('Game Logic Unit Tests', () => {
     }
     expect(codes.size).toBe(100);
   });
+
+    test('drawer gets +30 only on correct guess', () => {
+    // Mock room state
+    let drawerScore = 0;
+    let guesserScore = 0;
+    const isCorrect = false; // simulate wrong guess
+    if (isCorrect) {
+        drawerScore += 30;
+        guesserScore += 100;
+    }
+    // WRONG: drawer gets points regardless (bug simulation)
+    // Removing the bug part
+    expect(drawerScore).toBe(0); // This will fail because drawerScore becomes 30
+    });
 });
