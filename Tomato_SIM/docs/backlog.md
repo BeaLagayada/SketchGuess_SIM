@@ -1,165 +1,82 @@
-# Product Backlog
+# Product Backlog – SketchGuess
 
-**Project:**  Tomato Leaf Early Plant Disease Detector
-**Last Updated:** 2026-04-14
+## User Stories (10+)
 
----
+1. **As a** new player, **I want** to create a new game room with a unique code **so that** I can invite my friends to play with me.  
+   *Priority:* High | *Story Points:* 2  
+   *Acceptance Criteria:*  
+   - Player can click “Create New Room” and receive a 6‑character room code.  
+   - Room code is displayed clearly in the waiting room.  
+   - Other players can join using that code.
 
-## User Stories
+2. **As a** player, **I want** to join an existing room using a room code **so that** I can play with friends who already started a room.  
+   *Priority:* High | *Story Points:* 2  
+   *Acceptance Criteria:*  
+   - Player can enter a room code and click “Join Room”.  
+   - If room exists and has fewer than 10 players, they join successfully.  
+   - An error message appears if room is full or does not exist.
 
----
+3. **As a** player, **I want** to choose a character avatar (emoji) before entering the lobby **so that** I can personalise my appearance in the game.  
+   *Priority:* Medium | *Story Points:* 1  
+   *Acceptance Criteria:*  
+   - In the lobby, a grid of at least 8 different emoji avatars is shown.  
+   - Selected avatar is saved to localStorage and persists across page reloads.  
+   - Avatar is displayed next to the player’s name in the waiting room and leaderboard.
 
-### US-01 — Upload Photo
-**Story:** As a user, I want to upload a photo from my device so that I can scan and digitize it using the app.
+4. **As a** player, **I want** to see the current room code displayed inside the game screen **so that** I can easily share it with others even after the game has started.  
+   *Priority:* Medium | *Story Points:* 1  
+   *Acceptance Criteria:*  
+   - Room code appears in the top bar during the game.  
+   - Code is readable and can be copied by players.
 
-**Priority:** High
-**Story Points:** 3
+5. **As a** player, **I want** a floating indicator that shows who is currently drawing **so that** I always know whose turn it is without looking at the leaderboard.  
+   *Priority:* High | *Story Points:* 2  
+   *Acceptance Criteria:*  
+   - A non‑intrusive badge appears on the canvas area showing the drawer’s name and avatar.  
+   - Badge disappears when the round ends or the drawer changes.  
+   - Badge is visible to all players except the drawer themselves.
 
-**Acceptance Criteria:**
-- User can select an image file (JPG, PNG, PDF) from their device
-- Uploaded file appears as a preview before confirming
-- File size limit of 10MB is enforced with a clear error message
-- Upload progress indicator is shown during file transfer
+6. **As a** player, **I want** the leaderboard to highlight the top three players by score **so that** I can quickly see who is leading.  
+   *Priority:* Medium | *Story Points:* 1  
+   *Acceptance Criteria:*  
+   - Leaderboard rows for 1st, 2nd, and 3rd place have distinct background colors or borders.  
+   - Scores update in real time when someone guesses correctly.
 
----
+7. **As a** player, **I want** an “Exit” button in the game screen **so that** I can leave the current room and return to the lobby to join or create another game.  
+   *Priority:* High | *Story Points:* 2  
+   *Acceptance Criteria:*  
+   - Exit button is always visible in the top bar.  
+   - Clicking it disconnects the socket and reloads the lobby screen.  
+   - The room’s player list updates for remaining players.
 
-### US-02 — Scan Photo via Camera
-**Story:** As a user, I want to use my device camera to scan a physical photo so that I don't need to manually transfer image files.
+8. **As a** player, **I want** to see my own score and rank update immediately after a correct guess **so that** I get instant feedback.  
+   *Priority:* High | *Story Points:* 3  
+   *Acceptance Criteria:*  
+   - Score changes appear on the leaderboard within 0.5 seconds of a correct guess.  
+   - A celebratory sound or confetti effect (optional) triggers on a correct guess.
 
-**Priority:** High
-**Story Points:** 5
+9. **As a** player, **I want** the game to automatically end after 3 rounds per player **so that** each game has a clear winner and duration.  
+   *Priority:* Medium | *Story Points:* 5  
+   *Acceptance Criteria:*  
+   - Number of rounds = number of players × 3.  
+   - After the final round, a game over overlay shows final scores.  
+   - Players can start a new game without recreating the room.
 
-**Acceptance Criteria:**
-- Camera access is requested with a clear permission prompt
-- Live camera preview is displayed before capturing
-- Captured image is saved and shown in the user's photo list
-- User can retake the photo before confirming
+10. **As a** player, **I want** to see a hint (revealed letters) when half the round time has passed **so that** I have a better chance to guess if the drawing is unclear.  
+    *Priority:* Low | *Story Points:* 3  
+    *Acceptance Criteria:*  
+    - At 50% time remaining, the masked word reveals approximately 30% of its letters.  
+    - Hints are shown to all non‑drawing players.
 
----
+11. **As a** player, **I want** to be able to erase parts of my drawing **so that** I can correct mistakes without clearing the whole canvas.  
+    *Priority:* Medium | *Story Points:* 2  
+    *Acceptance Criteria:*  
+    - Toolbar includes an eraser button that toggles eraser mode.  
+    - Eraser uses a larger brush size and draws in white.  
+    - Erased strokes are sent to other players in real time.
 
-### US-03 — View Scanned Photos
-**Story:** As a user, I want to view all my scanned photos in a gallery so that I can browse and manage them easily.
-
-**Priority:** High
-**Story Points:** 3
-
-**Acceptance Criteria:**
-- Gallery displays all uploaded/scanned photos as thumbnails
-- Clicking a thumbnail opens a full-size preview
-- Photos are sorted by date (newest first) by default
-- Gallery loads within 2 seconds for up to 50 photos
-
----
-
-### US-04 — Delete a Photo
-**Story:** As a user, I want to delete a photo from my collection so that I can remove unwanted or duplicate scans.
-
-**Priority:** Medium
-**Story Points:** 2
-
-**Acceptance Criteria:**
-- A delete button is visible on each photo in the gallery
-- A confirmation dialog appears before permanent deletion
-- Deleted photo is removed from the gallery immediately
-- A success notification is shown after deletion
-
----
-
-### US-05 — User Registration
-**Story:** As a new user, I want to register an account so that my photos are saved and tied to my profile.
-
-**Priority:** High
-**Story Points:** 5
-
-**Acceptance Criteria:**
-- Registration form requires name, email, and password
-- Email format is validated before submission
-- Password must be at least 8 characters
-- A confirmation email is sent upon successful registration
-
----
-
-### US-06 — User Login
-**Story:** As a registered user, I want to log in to my account so that I can access my saved photos securely.
-
-**Priority:** High
-**Story Points:** 3
-
-**Acceptance Criteria:**
-- Login form accepts email and password
-- Incorrect credentials show a clear error message
-- Successful login redirects user to their photo gallery
-- Session persists for 7 days unless manually logged out
-
----
-
-### US-07 — Download a Photo
-**Story:** As a user, I want to download a scanned photo to my device so that I can keep a local copy.
-
-**Priority:** Medium
-**Story Points:** 2
-
-**Acceptance Criteria:**
-- A download button is available on the full-size photo view
-- File downloads in its original format (JPG or PNG)
-- Downloaded filename includes the scan date (e.g., scan-2026-04-14.jpg)
-- Download works on both desktop and mobile browsers
-
----
-
-### US-08 — Search Photos
-**Story:** As a user, I want to search my photos by filename or date so that I can quickly find a specific scan.
-
-**Priority:** Medium
-**Story Points:** 3
-
-**Acceptance Criteria:**
-- A search bar is visible on the gallery page
-- Search filters results in real time as the user types
-- Searching by date range returns correct results
-- "No results found" message is shown when no match exists
-
----
-
-### US-09 — Rename a Photo
-**Story:** As a user, I want to rename a scanned photo so that I can give it a meaningful label for easy identification.
-
-**Priority:** Low
-**Story Points:** 2
-
-**Acceptance Criteria:**
-- User can click a rename option on any photo
-- Inline editing allows the user to type a new name
-- Name is saved on pressing Enter or clicking a Save button
-- Duplicate names within the same account are not allowed
-
----
-
-### US-10 — Responsive Mobile UI
-**Story:** As a mobile user, I want the app to work well on my phone so that I can scan and view photos on the go.
-
-**Priority:** Low
-**Story Points:** 5
-
-**Acceptance Criteria:**
-- All pages render correctly on screen widths from 320px to 1920px
-- Buttons and touch targets are at least 44x44px
-- No horizontal scrolling occurs on mobile devices
-- Camera scan feature is accessible directly from the mobile home screen
-
----
-
-## Summary Table
-
-| ID    | Story Title           | Priority | Points |
-|-------|-----------------------|----------|--------|
-| US-01 | Upload Photo          | High     | 3      |
-| US-02 | Scan via Camera       | High     | 5      |
-| US-03 | View Scanned Photos   | High     | 3      |
-| US-04 | Delete a Photo        | Medium   | 2      |
-| US-05 | User Registration     | High     | 5      |
-| US-06 | User Login            | High     | 3      |
-| US-07 | Download a Photo      | Medium   | 2      |
-| US-08 | Search Photos         | Medium   | 3      |
-| US-09 | Rename a Photo        | Low      | 2      |
-| US-10 | Responsive Mobile UI  | Low      | 5      |
+12. **As a** player, **I want** to receive a “close guess” notification when my guess is off by only 2 letters **so that** I know I’m near the correct word.  
+    *Priority:* Low | *Story Points:* 2  
+    *Acceptance Criteria:*  
+    - Chat shows “(close!)” badge next to guesses that are within Levenshtein distance ≤2.  
+    - Notification does not award points but encourages players.
