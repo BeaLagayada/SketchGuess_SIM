@@ -1,6 +1,6 @@
 # Product Backlog
 
-**Project:** Photo Scanner App
+**Project:**  Tomato Leaf Early Plant Disease Detector
 **Last Updated:** 2026-04-14
 
 ---

@@ -1,19 +1,26 @@
 # Team Roles
 
-**Project:** Photo Scanner App
+**Project:** Tomato Leaf Early Plant Disease Detector
 **Team Size:** 5 Members
 
 ---
 
 ## Role Descriptions
 
-| Role | Responsibilities |
-|------|-----------------|
-| **PM / Scrum Master** | Facilitates meetings, tracks progress, updates backlog and sprint plan |
-| **QA Lead** | Writes and maintains tests, manages defect log, ensures quality standards |
-| **DevOps Lead** | Manages Git workflow, CI/CD setup, PR reviews, deployment |
-| **Docs Lead** | Maintains documentation, writes README, updates all /docs files |
-| **Developer** | Focuses on feature implementation for the sprint |
+| Role |Name | Responsibilities |
+|------|-----|-----------------|
+| **PM / Scrum Master** | Thomas Gabriel Martinez | Facilitates meetings, tracks progress, updates backlog and sprint plan |
+| **QA Lead** |Bea Lagayada | Writes and maintains tests, manages defect log, ensures quality standards |
+| **DevOps Lead** |Mariel Laplap | Manages Git workflow, CI/CD setup, PR reviews, deployment |
+| **Docs Lead** | Cydney Ruelo | Maintains documentation, writes README, updates all /docs files |
+| **Developer** | Roger Bao Jr | Focuses on feature implementation for the sprint |
+
+## Members
+| Member A | Thomas Gabriel Martinez |
+| Member B | Bea Lagayada |
+| Member C | Mariel Laplap |
+| Member D | Cydney Ruelo |
+| Member E | Roger Bao Jr |
 
 ---
 

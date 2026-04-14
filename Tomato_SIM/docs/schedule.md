@@ -1,6 +1,6 @@
 # Project Schedule
 
-**Project:** Photo Scanner App
+**Project:** Tomato Leaf Early Plant Disease Detector
 **Duration:** 15 Weeks
 
 ---

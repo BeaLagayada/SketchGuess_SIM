@@ -1,6 +1,6 @@
 # Sprint 1 Plan
 
-**Project:** Photo Scanner App
+**Project:** Tomato Leaf Early Plant Disease Detector
 **Sprint Duration:** Week 2 – Week 3 (April 14 – April 25, 2026)
 **Sprint Goal:** Set up the foundation of the app — user authentication and basic photo upload functionality.
 
