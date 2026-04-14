@@ -80,3 +80,12 @@
     *Acceptance Criteria:*  
     - Chat shows “(close!)” badge next to guesses that are within Levenshtein distance ≤2.  
     - Notification does not award points but encourages players.
+
+13. **As a** player, **I want** to skip my drawing turn **so that** I can pass the turn to the next player without waiting for the timer to run out.  
+    *Priority:* Medium | *Story Points:* 3  
+    *Acceptance Criteria:*  
+    - A “Skip” button appears only for the current drawer during their turn.  
+    - Clicking skip ends the current round immediately and moves to the next player’s turn.  
+    - No points are awarded to anyone for the skipped round.  
+    - The skipped drawer receives a small penalty (–10 points) to discourage abuse.  
+    - Skip can only be used once per player per game.
