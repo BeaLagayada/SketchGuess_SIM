@@ -7,6 +7,8 @@
 "Added bell sound on correct guess"
 "Security: input validation, host token auth, env variables, audit docs"
 "Week 12: Added Ethical, Legal, IP, Professional Issues"
+"Week 13: Added KPIs, Metrics, Monitoring, DAta-drive decisions"
+"Week 14: Added Cost-Benefit + Cost Estimation Models"
 
 
 ## Related Issue
