@@ -1,0 +1,28 @@
+name: Smoke Test after Deployment
+
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:  # allow manual trigger
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Render deployment (30s)
+        run: sleep 30
+
+      - name: Get deployed URL
+        id: url
+        run: |
+          # Replace with your actual Render URL
+          echo "DEPLOY_URL=https://sketchguess.onrender.com" >> $GITHUB_OUTPUT
+
+      - name: Smoke test - homepage loads
+        run: |
+          curl --fail --silent --head ${{ steps.url.outputs.DEPLOY_URL }} | head -n 1 | grep "200 OK"
+
+      - name: Smoke test - WebSocket handshake (optional)
+        run: |
+          # Basic check that the server responds to socket.io connection
+          curl --fail --silent ${{ steps.url.outputs.DEPLOY_URL }}/socket.io/?EIO=4&transport=polling | grep "sid"
