@@ -17,29 +17,17 @@ jobs:
         with:
           node-version: '18'
 
-      - name: Cache Node modules
-        uses: actions/cache@v3
-        with:
-          path: ~/.npm
-          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
-          restore-keys: |
-            ${{ runner.os }}-node-
+      - name: Install dependencies (in subfolder)
+        working-directory: ./SketchGuess_SIM/SketchGuess_SIM/tests
+        run: npm install
 
-      - name: Install dependencies
-        run: npm ci || npm install
+      - name: Wait for Render deployment (60s)
+        run: sleep 60
 
-      # We must wait for Render to finish its wake-up process before testing.
-      # A 45-second pause gives the free-tier service enough time to become ready.
-      - name: Wait for Render deployment (45s)
-        run: sleep 45
-
-      # Verifies the main application homepage is reachable.
       - name: Smoke test - homepage loads
         run: |
           curl --fail --silent --head https://sketchguess.onrender.com | head -n 1 | grep "200 OK"
 
-      # Confirms the WebSocket server is ready for connections. 
-      # A successful handshake will return a JSON containing a 'sid' value.
       - name: Smoke test - WebSocket handshake
         run: |
           curl --fail --silent https://sketchguess.onrender.com/socket.io/?EIO=4&transport=polling | grep "sid"
