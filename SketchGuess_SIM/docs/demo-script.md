@@ -13,7 +13,7 @@
 ## 3. CI/CD Pipeline (1.5 min)
 - Open GitHub Actions → show smoke test passing.
 - Show Render dashboard → auto‑deploy on `main` push.
-- Show health endpoint: `https://your-app.onrender.com/health`.
+- Show health endpoint: `https://sketchguess.onrender.com/health`.
 
 ## 4. Monitoring & Logging (1 min)
 - Show Render logs (HTTP requests, socket errors).
