@@ -1,0 +1,30 @@
+name: Smoke Test after Deployment
+on:
+  push:
+    branches: [ main ]
+  workflow_dispatch:
+
+jobs:
+  smoke-test:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wait for Render to deploy and wake up
+        run: sleep 60
+
+      - name: Smoke test - homepage loads
+        run: |
+          for i in $(seq 1 10); do
+            STATUS=$(curl --silent --output /dev/null --write-out "%{http_code}" --max-time 30 https://sketchguess.onrender.com/)
+            echo "Attempt $i: HTTP $STATUS"
+            if [ "$STATUS" = "200" ]; then
+              echo "Success!"
+              exit 0
+            fi
+            sleep 10
+          done
+          echo "Server never responded with 200"
+          exit 1
+
+      - name: Smoke test - WebSocket handshake
+        run: |
+          curl --fail --silent "https://sketchguess.onrender.com/socket.io/?EIO=4&transport=polling" | grep "sid"
