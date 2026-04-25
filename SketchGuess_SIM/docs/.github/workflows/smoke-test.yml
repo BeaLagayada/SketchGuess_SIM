@@ -3,26 +3,38 @@ name: Smoke Test after Deployment
 on:
   push:
     branches: [ main ]
-  workflow_dispatch:  # allow manual trigger
+  workflow_dispatch:
 
 jobs:
   smoke-test:
     runs-on: ubuntu-latest
     steps:
-      - name: Wait for Render deployment (30s)
-        run: sleep 30
+      - name: Checkout code
+        uses: actions/checkout@v4
 
-      - name: Get deployed URL
-        id: url
-        run: |
-          # Replace with your actual Render URL
-          echo "DEPLOY_URL=https://sketchguess.onrender.com" >> $GITHUB_OUTPUT
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '18'
+
+      - name: Cache Node modules
+        uses: actions/cache@v3
+        with:
+          path: ~/.npm
+          key: ${{ runner.os }}-node-${{ hashFiles('**/package-lock.json') }}
+          restore-keys: |
+            ${{ runner.os }}-node-
+
+      - name: Install dependencies
+        run: npm ci || npm install
+
+      - name: Wait for Render deployment (45s)
+        run: sleep 45
 
       - name: Smoke test - homepage loads
         run: |
-          curl --fail --silent --head ${{ steps.url.outputs.DEPLOY_URL }} | head -n 1 | grep "200 OK"
+          curl --fail --silent --head https://sketchguess-github-io.onrender.com | head -n 1 | grep "200 OK"
 
-      - name: Smoke test - WebSocket handshake (optional)
+      - name: Smoke test - WebSocket handshake
         run: |
-          # Basic check that the server responds to socket.io connection
-          curl --fail --silent ${{ steps.url.outputs.DEPLOY_URL }}/socket.io/?EIO=4&transport=polling | grep "sid"
+          curl --fail --silent https://sketchguess-github-io.onrender.com/socket.io/?EIO=4&transport=polling | grep "sid"
