@@ -4,12 +4,32 @@ const { Server } = require('socket.io');
 const { v4: uuidv4 } = require('uuid');
 const path = require('path');
 const crypto = require('crypto');
-require('dotenv').config();  // Load environment variables from .env
+const morgan = require('morgan'); // HTTP request logger
+require('dotenv').config();
 
 const app = express();
 const server = http.createServer(app);
 const io = new Server(server, {
   cors: { origin: '*' }
+});
+
+// ─── LOGGING & MONITORING ─────────────────────────────────────────────────────
+app.use(morgan('combined')); // log HTTP requests in Apache combined format
+app.use((req, res, next) => {
+  console.log(`[HTTP] ${new Date().toISOString()} ${req.method} ${req.url}`);
+  next();
+});
+
+// Health check endpoint (for uptime monitoring)
+app.get('/health', (req, res) => {
+  const totalPlayers = Object.values(rooms).reduce((sum, r) => sum + Object.keys(r.players).length, 0);
+  res.json({
+    status: 'ok',
+    uptime: process.uptime(),
+    timestamp: new Date().toISOString(),
+    rooms: Object.keys(rooms).length,
+    totalPlayers
+  });
 });
 
 app.use(express.static(path.join(__dirname, 'public')));
@@ -239,8 +259,12 @@ const rooms = {};
 io.on('connection', (socket) => {
   console.log(`[+] ${socket.id} connected`);
 
+  // Socket error logging
+  socket.on('error', (err) => {
+    console.error(`[Socket Error] ${socket.id}: ${err.message}`);
+  });
+
   socket.on('create-room', ({ name, avatar }) => {
-    // Input validation: player name
     if (!isValidName(name)) {
       socket.emit('error', { message: 'Invalid name. Use 2-16 letters, numbers, or underscore.' });
       return;
@@ -254,12 +278,11 @@ io.on('connection', (socket) => {
     socket.data.roomCode = code;
     socket.data.name = safeName;
     socket.emit('room-joined', { code, playerId: socket.id, room: getRoomPublic(room) });
-    socket.emit('host-token', { token });  // Send token to host
+    socket.emit('host-token', { token });
     console.log(`[Room] ${safeName} created room ${code}`);
   });
 
   socket.on('join-room', ({ code, name, avatar }) => {
-    // Input validation: room code and player name
     const upperCode = code?.toUpperCase();
     if (!isValidRoomCode(upperCode)) {
       socket.emit('error', { message: 'Invalid room code format (6 uppercase alphanumeric).' });
@@ -308,7 +331,6 @@ io.on('connection', (socket) => {
     const code = socket.data.roomCode;
     const room = rooms[code];
     if (!room || room.host !== socket.id) return;
-    // Authenticate using host token
     if (token !== hostTokens.get(code)) {
       socket.emit('error', { message: 'Unauthorized: invalid host token' });
       return;
@@ -341,7 +363,6 @@ io.on('connection', (socket) => {
     const code = socket.data.roomCode;
     const room = rooms[code];
     if (!room || room.currentDrawer !== socket.id) return;
-    // Basic sanitization of draw data (prevent large payloads)
     if (data && typeof data.x0 === 'number' && typeof data.y0 === 'number' &&
         typeof data.x1 === 'number' && typeof data.y1 === 'number' &&
         typeof data.color === 'string' && typeof data.size === 'number') {
@@ -376,7 +397,6 @@ io.on('connection', (socket) => {
       return;
     }
 
-    // Basic sanitization of guess message (limit length, remove harmful chars)
     const safeMessage = (typeof message === 'string' ? message.trim().slice(0, 60) : '').replace(/[<>]/g, '');
     if (!safeMessage) return;
 
@@ -439,6 +459,12 @@ function levenshtein(a, b) {
       dp[i][j] = a[i-1] === b[j-1] ? dp[i-1][j-1] : 1 + Math.min(dp[i-1][j], dp[i][j-1], dp[i-1][j-1]);
   return dp[m][n];
 }
+
+// ─── PERIODIC MONITORING (every hour) ────────────────────────────────────────
+setInterval(() => {
+  const totalPlayers = Object.values(rooms).reduce((sum, r) => sum + Object.keys(r.players).length, 0);
+  console.log(`[Monitor] Rooms: ${Object.keys(rooms).length}, Players: ${totalPlayers}`);
+}, 3600000); // 1 hour
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => console.log(`🎨 SketchGuess running at http://localhost:${PORT} | Word list size: ${EASY_WORDS.length}`));

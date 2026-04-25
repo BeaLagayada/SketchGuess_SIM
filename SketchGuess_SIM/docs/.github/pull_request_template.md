@@ -5,6 +5,8 @@
 "Added risks, calculated risk score, mitigation plans, risk owners, likelihood & impact in risk-register.md"
 "Week 4: Added server js and index html "
 "Added bell sound on correct guess"
+"Security: input validation, host token auth, env variables, audit docs"
+"Week 12: Added Ethical, Legal, IP, Professional Issues"
 
 
 ## Related Issue
