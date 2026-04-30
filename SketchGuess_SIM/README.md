@@ -1,6 +1,3 @@
-Here's a complete `README.md` file for your SketchGuess project. Copy and paste it into the root of your repository.
-
-```markdown
 # 🎨 SketchGuess – Multiplayer Drawing & Guessing Game
 
 SketchGuess is a real‑time multiplayer game where one player draws a word while others guess it. No accounts, no installation – just create a room, share the code, and start playing.
